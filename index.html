@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2311CSC404R – OOSE Concise Study Sheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1814;
+    --card: #211f1b;
+    --border: #3a3630;
+    --accent: #d4a853;
+    --accent2: #7ec8a4;
+    --accent3: #e07b7b;
+    --accent4: #7ab3d4;
+    --text: #e8e0d4;
+    --muted: #9a9080;
+    --u1: #d4a853;
+    --u2: #7ec8a4;
+    --u3: #e07b7b;
+    --u4: #7ab3d4;
+    --u5: #b98ed4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+
+  .page-header {
+    background: var(--surface);
+    border-bottom: 2px solid var(--accent);
+    padding: 28px 40px 22px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+
+  .page-header .sub {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .badge {
+    background: var(--accent);
+    color: #0f0e0c;
+    font-family: 'Playfair Display', serif;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+
+  .toc {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    overflow-x: auto;
+    padding: 0 40px;
+  }
+
+  .toc a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .toc a:hover { color: var(--text); }
+  .toc a.u1 { border-color: var(--u1); color: var(--u1); }
+  .toc a.u2 { border-color: var(--u2); color: var(--u2); }
+  .toc a.u3 { border-color: var(--u3); color: var(--u3); }
+  .toc a.u4 { border-color: var(--u4); color: var(--u4); }
+  .toc a.u5 { border-color: var(--u5); color: var(--u5); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 36px 40px 60px; }
+
+  .unit {
+    margin-bottom: 42px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .unit-header {
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .unit-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    letter-spacing: 0.3px;
+  }
+
+  .unit-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .u1-hdr { background: rgba(212,168,83,0.12); border-bottom: 1px solid rgba(212,168,83,0.3); }
+  .u2-hdr { background: rgba(126,200,164,0.12); border-bottom: 1px solid rgba(126,200,164,0.3); }
+  .u3-hdr { background: rgba(224,123,123,0.12); border-bottom: 1px solid rgba(224,123,123,0.3); }
+  .u4-hdr { background: rgba(122,179,212,0.12); border-bottom: 1px solid rgba(122,179,212,0.3); }
+  .u5-hdr { background: rgba(185,142,212,0.12); border-bottom: 1px solid rgba(185,142,212,0.3); }
+
+  .u1-hdr h2 { color: var(--u1); }
+  .u2-hdr h2 { color: var(--u2); }
+  .u3-hdr h2 { color: var(--u3); }
+  .u4-hdr h2 { color: var(--u4); }
+  .u5-hdr h2 { color: var(--u5); }
+
+  .unit-body { padding: 20px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: var(--card); }
+
+  @media (max-width: 700px) { .unit-body { grid-template-columns: 1fr; } }
+
+  .block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+
+  .block.full { grid-column: 1 / -1; }
+
+  .block h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 12.5px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .u1 .block h3 { color: var(--u1); }
+  .u2 .block h3 { color: var(--u2); }
+  .u3 .block h3 { color: var(--u3); }
+  .u4 .block h3 { color: var(--u4); }
+  .u5 .block h3 { color: var(--u5); }
+
+  .kv { margin-bottom: 7px; }
+  .kv .k {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 12.5px;
+  }
+  .kv .v {
+    color: var(--muted);
+    font-size: 12.5px;
+    margin-left: 6px;
+  }
+
+  ul.pts { list-style: none; padding: 0; }
+  ul.pts li {
+    padding: 2px 0 2px 14px;
+    position: relative;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  ul.pts li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--border);
+    font-size: 10px;
+    top: 4px;
+  }
+  ul.pts li strong { color: var(--text); }
+
+  table.ct {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
+  }
+  table.ct th {
+    text-align: left;
+    padding: 5px 8px;
+    color: var(--muted);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 10.5px;
+  }
+  table.ct td {
+    padding: 5px 8px;
+    color: var(--muted);
+    border-bottom: 1px solid rgba(58,54,48,0.5);
+    vertical-align: top;
+  }
+  table.ct td:first-child { color: var(--text); font-weight: 600; }
+  table.ct tr:last-child td { border-bottom: none; }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 1px 7px;
+    border-radius: 2px;
+    font-weight: 700;
+    margin-right: 3px;
+  }
+  .tag-k1 { background: rgba(126,200,164,0.15); color: var(--u2); }
+  .tag-k2 { background: rgba(212,168,83,0.15); color: var(--u1); }
+  .tag-k3 { background: rgba(122,179,212,0.15); color: var(--u4); }
+  .tag-k4 { background: rgba(224,123,123,0.15); color: var(--u3); }
+  .tag-k5 { background: rgba(185,142,212,0.15); color: var(--u5); }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 0;
+  }
+
+  .note {
+    background: rgba(212,168,83,0.07);
+    border-left: 3px solid var(--accent);
+    padding: 8px 12px;
+    font-size: 11.5px;
+    color: var(--muted);
+    border-radius: 0 3px 3px 0;
+    margin-top: 10px;
+  }
+  .note strong { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <h1>Object Oriented Software Engineering — Quick Reference</h1>
+    <div class="sub">2311CSC404R &nbsp;·&nbsp; B.E/B.Tech CSE &nbsp;·&nbsp; IV Semester &nbsp;·&nbsp; Reg. 2023 V1.1 &nbsp;·&nbsp; APR/MAY 2026</div>
+  </div>
+  <div class="badge">All 5 Units</div>
+</div>
+
+<nav class="toc">
+  <a href="#u1" class="u1">Unit I – OOSE & SDLC</a>
+  <a href="#u2" class="u2">Unit II – UML & Requirements</a>
+  <a href="#u3" class="u3">Unit III – Design Patterns</a>
+  <a href="#u4" class="u4">Unit IV – Testing & Debugging</a>
+  <a href="#u5" class="u5">Unit V – Project Mgmt & DevOps</a>
+</nav>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════════════════════ UNIT 1 -->
+<section class="unit u1" id="u1">
+  <div class="unit-header u1-hdr">
+    <span class="unit-num">Unit I</span>
+    <h2>OOSE Fundamentals & SDLC Models</h2>
+    <span class="tag tag-k1">CO1</span>
+  </div>
+  <div class="unit-body">
+
+    <div class="block">
+      <h3>Core Definitions</h3>
+      <ul class="pts">
+        <li><strong>Software Engineering:</strong> Disciplined, engineering-principles-based approach ensuring reliability, efficiency &amp; maintainability of software.</li>
+        <li><strong>OOSE:</strong> Develops software using OO principles — models system as interacting <em>objects</em> (data + behavior). Ensures scalability, flexibility.</li>
+        <li><strong>OO Paradigm:</strong> Organizes software around <em>objects</em> combining attributes &amp; methods. Improves modularity, reusability, maintainability.</li>
+        <li><strong>SE vs. Programming:</strong> SE = systematic process (analysis→design→test→maintenance); Programming = mainly coding.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>OOP Benefits &amp; Principles</h3>
+      <ul class="pts">
+        <li><strong>Reusability</strong> — code reused via inheritance</li>
+        <li><strong>Maintainability</strong> — changes isolated per class</li>
+        <li><strong>Encapsulation</strong> — data hidden inside objects</li>
+        <li><strong>Polymorphism</strong> — same interface, multiple behaviors</li>
+        <li><strong>Abstraction</strong> — expose essentials, hide details</li>
+        <li><strong>Scalability</strong> — add new classes without major changes</li>
+      </ul>
+    </div>
+
+    <div class="block full">
+      <h3>SDLC Phases &amp; Contribution</h3>
+      <table class="ct">
+        <tr><th>Phase</th><th>Purpose</th><th>Example (E-Commerce)</th></tr>
+        <tr><td>Requirement Analysis</td><td>Understand what software should do</td><td>Login, product catalog, checkout</td></tr>
+        <tr><td>System Design</td><td>Plan architecture, modules, DB</td><td>UI → Business → Database layers</td></tr>
+        <tr><td>Implementation</td><td>Write actual code</td><td>Shopping cart, payment module</td></tr>
+        <tr><td>Testing</td><td>Find and fix errors</td><td>Unit, integration, system testing</td></tr>
+        <tr><td>Deployment</td><td>Release to users</td><td>Launch web/mobile app</td></tr>
+        <tr><td>Maintenance</td><td>Fix bugs, add features</td><td>New payment gateway, bug fixes</td></tr>
+      </table>
+      <div class="note"><strong>SDLC improves quality by:</strong> Enforcing standards, reviews, and testing at every phase → reduces errors, enhances reliability.</div>
+    </div>
+
+    <div class="block">
+      <h3>Waterfall Model</h3>
+      <ul class="pts">
+        <li><strong>Type:</strong> Linear, sequential, top-down</li>
+        <li><strong>Approach:</strong> Each phase must complete before next starts</li>
+        <li><strong>Phases:</strong> Requirements → Design → Implementation → Testing → Deployment → Maintenance</li>
+        <li><strong>Advantages:</strong> Simple to manage, heavy documentation, clear milestones</li>
+        <li><strong>Limitations:</strong> Inflexible, changes are costly, errors detected late</li>
+        <li><strong>Best for:</strong> Small/simple projects with stable, well-defined requirements</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Spiral Model</h3>
+      <ul class="pts">
+        <li><strong>Type:</strong> Iterative, risk-driven, prototype-based</li>
+        <li><strong>Each cycle:</strong> Planning → Risk Analysis → Engineering → Evaluation</li>
+        <li><strong>Risk focus:</strong> Risk analysis in <em>every</em> iteration — identifies & mitigates early</li>
+        <li><strong>Advantages:</strong> Handles uncertainty, continuous feedback, risk reduction</li>
+        <li><strong>Best for:</strong> Large, complex, high-risk projects (banking, aerospace)</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Agile Methodology</h3>
+      <ul class="pts">
+        <li><strong>Definition:</strong> Flexible, iterative development focused on collaboration, customer feedback, rapid delivery</li>
+        <li><strong>Iteration (Sprint):</strong> 1–4 week cycles, each delivering a working increment</li>
+        <li><strong>Role of feedback:</strong> Early error detection, continuous improvement, better alignment with requirements</li>
+        <li><strong>Advantages over Waterfall:</strong> Flexible to change, faster delivery, customer-centric</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Waterfall vs Spiral vs Agile</h3>
+      <table class="ct">
+        <tr><th>Feature</th><th>Waterfall</th><th>Spiral</th><th>Agile</th></tr>
+        <tr><td>Approach</td><td>Linear</td><td>Iterative + Risk</td><td>Iterative</td></tr>
+        <tr><td>Flexibility</td><td>Low</td><td>High</td><td>Very High</td></tr>
+        <tr><td>Risk Handling</td><td>Minimal</td><td>Strong (each cycle)</td><td>Moderate</td></tr>
+        <tr><td>Feedback</td><td>After deployment</td><td>After each spiral</td><td>Continuous</td></tr>
+        <tr><td>Best Use</td><td>Simple, stable</td><td>Large, high-risk</td><td>Changing requirements</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <h3>OOSE Development Activities → Products</h3>
+      <table class="ct">
+        <tr><th>Activity</th><th>Output</th></tr>
+        <tr><td>Requirements</td><td>Use-case diagrams, user stories</td></tr>
+        <tr><td>Analysis</td><td>Class &amp; sequence diagrams</td></tr>
+        <tr><td>Design</td><td>Object diagrams, module design</td></tr>
+        <tr><td>Implementation</td><td>Source code (classes &amp; objects)</td></tr>
+        <tr><td>Testing</td><td>Unit, integration, system test reports</td></tr>
+        <tr><td>Deployment</td><td>Installed system, user manuals</td></tr>
+        <tr><td>Maintenance</td><td>Patches, new features</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <h3>Challenges in Software Development</h3>
+      <ul class="pts">
+        <li><strong>Changing Requirements:</strong> User needs evolve during development</li>
+        <li><strong>Complexity:</strong> Large systems hard to manage</li>
+        <li><strong>Quality Assurance:</strong> Bugs, performance issues</li>
+        <li><strong>Time &amp; Budget:</strong> Limited resources, strict deadlines</li>
+        <li><strong>Team Coordination:</strong> Multiple developers need communication</li>
+      </ul>
+    </div>
+
+    <div class="block full">
+      <h3>Ride-Sharing Application — OO Model (Part A Q14 / Part C Q2)</h3>
+      <table class="ct">
+        <tr><th>Class / Entity</th><th>Type</th><th>Key Attributes &amp; Methods</th></tr>
+        <tr><td>User</td><td>Base Class</td><td>UserID, Name, Phone, Rating</td></tr>
+        <tr><td>Rider</td><td>Extends User</td><td>RequestRide(), MakePayment()</td></tr>
+        <tr><td>Driver</td><td>Extends User</td><td>LicenseNumber, AvailabilityStatus, AcceptRide(), UpdateLocation()</td></tr>
+        <tr><td>Vehicle</td><td>Entity</td><td>LicensePlate, Model, Type (Sedan/SUV/Bike)</td></tr>
+        <tr><td>Trip/Ride</td><td>Transactional</td><td>Source, Destination, Fare, Status (Requested→In-Progress→Completed). Links Rider + Driver + Vehicle</td></tr>
+        <tr><td>Location</td><td>Value Object</td><td>Latitude, Longitude — for real-time tracking</td></tr>
+        <tr><td>RideManager</td><td>Manager (SRP)</td><td>Manages ride lifecycle, matching algorithm</td></tr>
+        <tr><td>DriverManager</td><td>Manager (SRP)</td><td>Tracks real-time driver locations, manages available pool</td></tr>
+        <tr><td>FareStrategy</td><td>Strategy Pattern</td><td>Calculates price based on vehicle type, distance, surge factor</td></tr>
+      </table>
+      <div class="note"><strong>Key Relationships:</strong> Trip <em>has-a</em> Rider, Driver, two Location objects (Composition). Trip transitions: WAITING_FOR_DRIVER → DRIVER_ON_WAY → ON_TRIP → COMPLETED (State). Future enhancements (dynamic pricing, multi-payment) handled via <strong>Strategy Pattern</strong> — add new FareStrategy/PaymentStrategy subclass without rewriting existing code.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ UNIT 2 -->
+<section class="unit u2" id="u2">
+  <div class="unit-header u2-hdr">
+    <span class="unit-num">Unit II</span>
+    <h2>UML, Requirements Analysis &amp; System Modelling</h2>
+    <span class="tag tag-k2">CO2</span>
+  </div>
+  <div class="unit-body">
+
+    <div class="block">
+      <h3>Requirements Types</h3>
+      <ul class="pts">
+        <li><strong>Functional Requirements:</strong> What the system should do. Ex: "Allow fund transfer, view balance."</li>
+        <li><strong>Non-Functional Requirements:</strong> How well it performs. Ex: "Support 10,000 concurrent users, 99.9% uptime."</li>
+        <li><strong>Evaluation criteria — Functional:</strong> Clear, complete, feasible, verifiable</li>
+        <li><strong>Evaluation criteria — Non-functional:</strong> Measurable, consistent, verifiable (performance, security, reliability)</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>UML — Three Ways to Apply</h3>
+      <ul class="pts">
+        <li><strong>As a Sketch:</strong> Informal, quick diagrams to explore ideas</li>
+        <li><strong>As a Blueprint:</strong> Formal detailed diagrams guiding construction</li>
+        <li><strong>As a Programming Tool:</strong> Generate code from models using CASE tools</li>
+      </ul>
+      <div class="divider"></div>
+      <h3>Use Case Diagram Elements</h3>
+      <ul class="pts">
+        <li><strong>Actor:</strong> External user/system (stick figure)</li>
+        <li><strong>Use Case:</strong> Function/service (oval/ellipse)</li>
+        <li><strong>System Boundary:</strong> Rectangle showing scope</li>
+        <li><strong>Association:</strong> Line connecting actor &amp; use case</li>
+        <li><strong>Include/Extend:</strong> Dashed arrows for mandatory/optional behavior</li>
+        <li><strong>3 Actor Types:</strong> Primary, Supporting, Offstage</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>UML Relationships</h3>
+      <table class="ct">
+        <tr><th>Relationship</th><th>Symbol</th><th>Meaning</th></tr>
+        <tr><td>Association</td><td>——</td><td>Basic connection. Ex: Passenger ↔ Ride</td></tr>
+        <tr><td>Aggregation</td><td>◇—</td><td>Whole-part; parts can exist independently. Ex: Dept ◇— Employee</td></tr>
+        <tr><td>Composition</td><td>◆—</td><td>Strong whole-part; parts can't exist without whole. Ex: ATM ◆— Cash Dispenser</td></tr>
+        <tr><td>Inheritance</td><td>→ (hollow)</td><td>Subclass inherits superclass. Ex: Staff → Doctor</td></tr>
+        <tr><td>Generalization</td><td>→ (hollow)</td><td>Superclass specialized into subclasses</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <h3>Node &amp; DFD</h3>
+      <ul class="pts">
+        <li><strong>Node (Deployment Diagram):</strong> A physical element representing a hardware device or execution environment where software components are deployed. Ex: ATM Machine node ↔ Bank Server node.</li>
+        <li><strong>DFD Elements:</strong> Process (circle/rectangle), Data Store (open rectangle), Data Flow (arrow), External Entity (square). Shows how data moves through system.</li>
+      </ul>
+      <div class="divider"></div>
+      <h3>Access Modifiers in Class Diagram</h3>
+      <ul class="pts">
+        <li><strong>+ (Public):</strong> Accessible from anywhere</li>
+        <li><strong>- (Private):</strong> Accessible only within the class</li>
+        <li><strong># (Protected):</strong> Accessible within class and subclasses</li>
+        <li><strong>Example:</strong> <code>- balance: double</code> (private attr), <code>+ getBalance(): double</code> (public method), <code># accountId: int</code> (protected attr)</li>
+      </ul>
+    </div>
+      <ul class="pts">
+        <li><strong>Package:</strong> Group related classes, show dependencies. Ex: HMS — Patient Services, Billing, Laboratory</li>
+        <li><strong>Component:</strong> Software components &amp; interactions. Ex: Ride-Sharing — Ride Mgmt, Payment, Notification</li>
+        <li><strong>Deployment:</strong> Physical hardware &amp; software nodes. Ex: ATM machine ↔ Bank Server</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Dynamic Modelling Techniques</h3>
+      <ul class="pts">
+        <li><strong>Dynamic Modeling:</strong> Focuses on system behavior over time — interactions, message flow, state changes</li>
+        <li><strong>Sequence Diagram:</strong> Shows interaction between objects in time order. Helps understand object collaboration, use case realization, detect missing interactions</li>
+        <li><strong>State Transition Diagram:</strong> Shows states of an object &amp; transitions due to events. Represents object life cycle, models event-driven behavior</li>
+        <li><strong>DFD:</strong> Graphical representation of data movement — processes, stores, flows, external entities</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Component &amp; Deployment Diagram Analysis</h3>
+      <ul class="pts">
+        <li><strong>Component Diagram — Dependencies:</strong> Shows provided/required interfaces, identifies tight coupling, detects dependency cycles, supports impact analysis</li>
+        <li><strong>Component Diagram — Reusability:</strong> Identifies loosely coupled components with high cohesion and generic interfaces</li>
+        <li><strong>Deployment Diagram — Performance:</strong> Identifies load per node, detects network latency, locates bottlenecks</li>
+        <li><strong>Deployment Diagram — Scalability:</strong> Visualizes distributed nodes, supports horizontal/vertical scaling</li>
+        <li><strong>Deployment Diagram — Security:</strong> Identifies critical nodes, analyzes network boundaries &amp; firewalls</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Package Diagram &amp; Dependencies</h3>
+      <ul class="pts">
+        <li><strong>Purpose:</strong> Organizes elements into packages, shows dependencies</li>
+        <li><strong>Scalability:</strong> Loose coupling → easy expansion; cyclic dependencies → reduce scalability</li>
+        <li><strong>Maintainability:</strong> Clear deps → easier debugging; tight coupling → more maintenance effort</li>
+        <li><strong>Reusability:</strong> Independent packages → reusable; highly dependent → reduces reuse</li>
+        <li><strong>Critical:</strong> Poor design leads to dependency explosion, rigid &amp; error-prone system</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Recommendation System (Case Study Key Points)</h3>
+      <ul class="pts">
+        <li><strong>Stakeholders:</strong> End Users, Business Owners, Data Scientists, Developers, Sys Admins, Marketing</li>
+        <li><strong>Functional Req:</strong> User registration, collect behavior data, generate recommendations, dynamic updates</li>
+        <li><strong>Non-functional:</strong> Performance, scalability, security, 24/7 availability, accuracy</li>
+        <li><strong>User Profiling:</strong> Registration → store details → maintain history → update dynamically</li>
+        <li><strong>Rec Engine Steps:</strong> Data Ingestion → User Profiling → Candidate Generation → Scoring → Re-ranking → Feedback loop</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ UNIT 3 -->
+<section class="unit u3" id="u3">
+  <div class="unit-header u3-hdr">
+    <span class="unit-num">Unit III</span>
+    <h2>OO Design, Patterns &amp; Architectural Styles</h2>
+    <span class="tag tag-k3">CO3</span>
+  </div>
+  <div class="unit-body">
+
+    <div class="block">
+      <h3>Design Patterns — Overview</h3>
+      <ul class="pts">
+        <li><strong>Pattern:</strong> Reusable solution to a recurring problem</li>
+        <li><strong>Design Pattern:</strong> Proven solution for common software design problems</li>
+        <li><strong>Uses:</strong> Improve reuse, flexibility, maintainability; provide standard solutions; reduce dev time</li>
+        <li><strong>Categories:</strong> Creational, Structural, Behavioral</li>
+      </ul>
+      <div class="divider"></div>
+      <h3>Behavioral Patterns (List)</h3>
+      <ul class="pts">
+        <li>Observer, Strategy, Command, State, Iterator, Mediator, Memento, Visitor, Template Method, Chain of Responsibility</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Key Design Patterns</h3>
+      <table class="ct">
+        <tr><th>Pattern</th><th>Type</th><th>Purpose &amp; Use Case</th></tr>
+        <tr><td>Singleton</td><td>Creational</td><td>Only one instance; global access point. Use: DB connection, Logger</td></tr>
+        <tr><td>Factory Method</td><td>Creational</td><td>Interface for object creation; subclasses decide class. Use: Flexible object creation</td></tr>
+        <tr><td>Observer</td><td>Behavioral</td><td>One-to-many dependency; subject notifies all observers on state change. Use: Event-driven systems, GUI</td></tr>
+        <tr><td>Adapter</td><td>Structural</td><td>Bridge between incompatible interfaces; enables reuse of legacy code. Use: Integrating third-party libs</td></tr>
+        <tr><td>Bridge</td><td>Structural</td><td>Separates abstraction from implementation</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <h3>Coupling &amp; Cohesion</h3>
+      <ul class="pts">
+        <li><strong>Coupling:</strong> Degree of dependency between modules. <em>Low coupling</em> = desirable (independent, easy to maintain)</li>
+        <li><strong>Types of Coupling:</strong> Content, Common, Control, Stamp, Data</li>
+        <li><strong>Cohesion:</strong> Degree to which module elements belong together. <em>High cohesion</em> = desirable (single responsibility)</li>
+        <li><strong>Goal:</strong> Loosely coupled + highly cohesive → easy to modify, maintain, test, scale</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>GRASP Patterns</h3>
+      <ul class="pts">
+        <li><strong>GRASP:</strong> General Responsibility Assignment Software Patterns</li>
+        <li><strong>Creator:</strong> Assign creation to class with most knowledge</li>
+        <li><strong>Information Expert:</strong> Assign responsibility to class with needed info</li>
+        <li><strong>Low Coupling:</strong> Minimize class dependencies</li>
+        <li><strong>High Cohesion:</strong> Focused, related responsibilities per class</li>
+        <li><strong>Controller:</strong> Centralized class handles system events</li>
+        <li><strong>Pure Fabrication:</strong> New class fulfills responsibility without violating cohesion</li>
+        <li><strong>Indirection:</strong> Use intermediaries to decouple classes</li>
+        <li><strong>Polymorphism:</strong> Multiple implementations via inheritance/interfaces</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Adapter Pattern — Pros &amp; Cons</h3>
+      <ul class="pts">
+        <li><strong>Pros:</strong> Promotes code reuse; decouples system from implementation; supports multiple interfaces; isolates adaptation logic</li>
+        <li><strong>Cons:</strong> Adds complexity; slight performance overhead; multiple adapters → maintenance effort; risk of overuse</li>
+        <li><strong>Use when:</strong> Enabling incompatible systems to communicate; reusing existing code/libraries without rewriting</li>
+        <li><strong>Avoid when:</strong> System is already compatible; performance-critical; project is too short-lived</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Observer Pattern — Features</h3>
+      <ul class="pts">
+        <li><strong>Loose Coupling:</strong> Subject doesn't know observer details</li>
+        <li><strong>Dynamic Relationships:</strong> Observers added/removed at runtime</li>
+        <li><strong>Scalability:</strong> Works with many dependent objects</li>
+        <li><strong>Automatic Synchronization:</strong> State change propagates to all observers</li>
+        <li><strong>Real-world:</strong> Stock market apps, GUI event systems, notification services</li>
+      </ul>
+    </div>
+
+    <div class="block full">
+      <h3>Architectural Styles</h3>
+      <table class="ct">
+        <tr><th>Style</th><th>Description</th><th>Layers / Components</th><th>Real-World Example</th></tr>
+        <tr><td>Layered (N-Tier)</td><td>System divided into horizontal layers; each communicates with adjacent layer only</td><td>Presentation → Application → Business Logic → Data Access → Database</td><td>Online Banking, E-Commerce (Spring, .NET)</td></tr>
+        <tr><td>Client–Server</td><td>Clients request services; server processes &amp; returns results</td><td>Client + Server + Network (HTTP/HTTPS/SQL)</td><td>Email (Gmail), ATM System, Web browsing</td></tr>
+        <tr><td>Microservices</td><td>App broken into small independent services communicating via APIs</td><td>Independent deployable services</td><td>Netflix (500+ services), Uber, Amazon</td></tr>
+      </table>
+      <div class="note"><strong>Layered Technologies per Layer:</strong> Presentation: React, Angular, Vue.js, Swift, Kotlin | Application (Service): Node.js, Express, .NET Core, Spring Boot | Business Logic: Java, Python, C# | Data Access: ORM frameworks (Hibernate, Entity Framework), SQL/MongoDB | Database: MySQL, PostgreSQL, MongoDB, Oracle, Redis. <strong>Client-Server adv.:</strong> Modularity (encapsulation), centralized logic, reusability. <strong>Microservices adv.:</strong> Independent updates, high scalability, fault isolation.</div>
+    </div>
+
+    <div class="block full">
+      <h3>Design Artifacts → Implementation Code</h3>
+      <table class="ct">
+        <tr><th>Artifact</th><th>Maps To</th><th>Code Element</th></tr>
+        <tr><td>Use Case Diagram</td><td>Methods per use case; Actors → Controller classes</td><td>Methods, Controller classes</td></tr>
+        <tr><td>Class Diagram</td><td>Classes → class defs; Attributes → variables; Methods → functions</td><td>Class, fields, methods</td></tr>
+        <tr><td>Relationships</td><td>Inheritance → extends; Association → object reference; Composition → object inside another</td><td>extends, object refs</td></tr>
+        <tr><td>Sequence Diagram</td><td>Message flow → method calling sequence in code</td><td>Method call chains</td></tr>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ UNIT 4 -->
+<section class="unit u4" id="u4">
+  <div class="unit-header u4-hdr">
+    <span class="unit-num">Unit IV</span>
+    <h2>Implementation, Testing &amp; Debugging</h2>
+    <span class="tag tag-k4">CO4</span>
+  </div>
+  <div class="unit-body">
+
+    <div class="block">
+      <h3>Core Definitions</h3>
+      <ul class="pts">
+        <li><strong>Software Testing:</strong> Critical element of SQA; ultimate review of specification, design &amp; coding. Finds errors, ensures reliability.</li>
+        <li><strong>Verification:</strong> "Building the product right?" — ensures correct implementation of specific functions</li>
+        <li><strong>Validation:</strong> "Building the right product?" — ensures software is traceable to customer requirements</li>
+        <li><strong>Objectives:</strong> Execute program to find errors; good test = high probability of finding undiscovered errors</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Testing Types Hierarchy</h3>
+      <ul class="pts">
+        <li><strong>White Box Testing:</strong> Internal structure/code known to tester; verifies logic, paths, loops, conditions</li>
+        <li><strong>Black Box Testing:</strong> Internal structure unknown; tests functionality (inputs → outputs) from user perspective</li>
+        <li><strong>Gray Box Testing:</strong> Partial knowledge of internal structure</li>
+        <li><strong>Functional:</strong> Tests against functional requirements → Unit, Integration, System Testing</li>
+        <li><strong>Non-Functional:</strong> Quality attributes → Performance, Usability, Compatibility Testing</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Testing Levels</h3>
+      <table class="ct">
+        <tr><th>Level</th><th>Scope</th><th>Key Points</th></tr>
+        <tr><td>Unit Testing</td><td>Individual components in isolation</td><td>Uses stubs/drivers/mocks; fast, early detection; can't catch integration errors</td></tr>
+        <tr><td>Component Testing</td><td>Individual components independently</td><td>Tests usability, input/output behavior before integration</td></tr>
+        <tr><td>Integration Testing</td><td>Combined modules as a group</td><td>After unit, before system testing. Approaches: Non-incremental, Incremental</td></tr>
+        <tr><td>System Testing</td><td>Complete integrated system</td><td>Recovery, Security, Stress, Performance testing</td></tr>
+        <tr><td>Usability Testing</td><td>End-user perspective</td><td>Non-functional; tests user-friendliness, usefulness; performed during system &amp; acceptance testing</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <h3>Integration Testing — Top-Down vs Bottom-Up</h3>
+      <ul class="pts">
+        <li><strong>Top-Down:</strong> Starts from the top module; uses stubs for lower modules; breadth-first or depth-first</li>
+        <li><strong>Bottom-Up:</strong> Starts from the lowest modules; uses drivers for higher modules; no stubs needed</li>
+        <li><strong>Non-incremental:</strong> All modules integrated at once ("big bang")</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Testing vs Debugging</h3>
+      <table class="ct">
+        <tr><th>Aspect</th><th>Testing</th><th>Debugging</th></tr>
+        <tr><td>Purpose</td><td>Find errors/bugs</td><td>Locate &amp; fix errors</td></tr>
+        <tr><td>Activity</td><td>Quality assurance</td><td>Corrective activity</td></tr>
+        <tr><td>Performed by</td><td>Testers / QA teams</td><td>Developers</td></tr>
+        <tr><td>Method</td><td>Manual or automated</td><td>Always manual</td></tr>
+        <tr><td>Outcome</td><td>Identifies failures</td><td>Corrected code</td></tr>
+        <tr><td>Planning</td><td>Scheduled, predefined test conditions</td><td>No fixed procedure/time</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <h3>Debugging Approaches &amp; Stages</h3>
+      <ul class="pts">
+        <li><strong>Approaches:</strong> Brute Force, Backtracking, Cause Elimination, Program Slicing, Debugging Tools</li>
+        <li><strong>Stages:</strong> 1) Identify error → 2) Locate error → 3) Analyze cause → 4) Design fix → 5) Correct error → 6) Recompile → 7) Test fix (regression) → 8) Document fix</li>
+        <li><strong>Locating tools:</strong> Backtracking, program slicing, debuggers with breakpoints</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Regression Testing</h3>
+      <ul class="pts">
+        <li><strong>Definition:</strong> Confirms no new defects introduced after changes; old defects remain fixed</li>
+        <li><strong>When to perform:</strong> After new feature addition, requirement change, defect fix, performance fix, environment change</li>
+        <li><strong>Techniques:</strong> Re-test All; Regression Test Selection (reusable vs obsolete test cases); Prioritization (by business impact)</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Alpha vs Beta Testing</h3>
+      <table class="ct">
+        <tr><th>Aspect</th><th>Alpha Testing</th><th>Beta Testing</th></tr>
+        <tr><td>Performed by</td><td>Internal testers / developers at developer's site</td><td>Real end-users at customer's site</td></tr>
+        <tr><td>Environment</td><td>Controlled lab/development environment</td><td>Real user environment</td></tr>
+        <tr><td>Stage</td><td>Before beta testing; near end of development</td><td>After alpha; just before final release</td></tr>
+        <tr><td>Goal</td><td>Find bugs before release to external users</td><td>Validate real-world usability and performance</td></tr>
+        <tr><td>Feedback</td><td>Immediate, internal</td><td>From actual users, external</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <h3>Test Case Management</h3>
+      <ul class="pts">
+        <li><strong>Definition:</strong> Process where testing activities are managed to ensure high quality testing of a software application</li>
+        <li><strong>Consists of:</strong> Tracking, organization, controlling process, checks visibility of the testing process</li>
+        <li><strong>Goal:</strong> Deliver high quality software application</li>
+        <li><strong>Key aspects:</strong> Organizing test cases, assigning to testers, tracking execution status, reporting defects, managing test cycles</li>
+      </ul>
+    </div>
+      <ul class="pts">
+        <li><strong>Definition:</strong> Tools execute tests, report outcomes, compare with earlier results</li>
+        <li><strong>Benefits:</strong> Higher accuracy, better reporting, increased coverage, improved bug detection, reusability</li>
+        <li><strong>Best for automating:</strong> Repetitive tests, tests with multiple data sets, tests impossible to perform manually, tests prone to human error</li>
+        <li><strong>vs Manual:</strong> Manual gives human insight per step; automation is faster for regression and repetitive tests</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Usability Testing</h3>
+      <ul class="pts">
+        <li><strong>Type:</strong> Non-functional, black-box; tests user-friendliness, usefulness, traceability, desirability</li>
+        <li><strong>When:</strong> Early stages of SDLC; throughout system &amp; acceptance testing</li>
+        <li><strong>Advantages:</strong> Validates usability, improves satisfaction, discovers usability issues before delivery</li>
+        <li><strong>Disadvantages:</strong> Costly (lab setup, engineers), harder to find volunteers, not 100% representative of real conditions</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Testing Activities &amp; Objectives</h3>
+      <ul class="pts">
+        <li><strong>Testing Activities (5):</strong> Test Planning → Test Case Design → Test Execution → Data Collection → Effective Evaluation</li>
+        <li><strong>Objectives of Testing:</strong> Execute program to find errors; A good test = high probability of finding undiscovered error; A successful test = uncovers an as-yet undiscovered error</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Test Plan — 7 Steps (IEEE 829)</h3>
+      <ul class="pts">
+        <li>1. Analyze product structure &amp; architecture</li>
+        <li>2. Design the test strategy</li>
+        <li>3. Define all test objectives</li>
+        <li>4. Define the testing area (scope)</li>
+        <li>5. Define usable resources</li>
+        <li>6. Schedule all activities appropriately</li>
+        <li>7. Determine all test deliverables</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Documentation Testing — Types</h3>
+      <ul class="pts">
+        <li><strong>Test Scenario:</strong> Multiple ways/combinations to test; shows application flow; no inputs/navigation steps</li>
+        <li><strong>Test Case:</strong> Step-by-step procedure with navigation, inputs, and expected output</li>
+        <li><strong>Test Plan:</strong> All testing activities — objectives, scope, approach, environments, methodology, risks</li>
+        <li><strong>RTM:</strong> Requirement Traceability Matrix — links requirements to test cases</li>
+        <li><strong>Bug Report:</strong> Records detected defects</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>System Testing Types</h3>
+      <ul class="pts">
+        <li><strong>Recovery Testing:</strong> System's ability to recover from failures</li>
+        <li><strong>Security Testing:</strong> Verifies protection against improper penetration or data alteration</li>
+        <li><strong>Stress Testing:</strong> Determines breakpoint / maximum service level</li>
+        <li><strong>Performance Testing:</strong> Evaluates runtime performance, especially real-time software</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ UNIT 5 -->
+<section class="unit u5" id="u5">
+  <div class="unit-header u5-hdr">
+    <span class="unit-num">Unit V</span>
+    <h2>Project Management, Agile, DevOps &amp; Version Control</h2>
+    <span class="tag tag-k5">CO5</span>
+  </div>
+  <div class="unit-body">
+
+    <div class="block">
+      <h3>Software Project Planning</h3>
+      <ul class="pts">
+        <li><strong>Definition:</strong> Identifying goals/scope, estimating cost/effort/time, allocating resources, identifying risks &amp; mitigation plans</li>
+        <li><strong>Risk vs Uncertainty:</strong> Risk = known unknown (predictable, can be planned); Uncertainty = unknown unknown (cannot be predicted/controlled)</li>
+        <li><strong>Types of Risk:</strong> Technical, Schedule, Cost, Resource, External</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Risk Management</h3>
+      <ul class="pts">
+        <li><strong>Benefits:</strong> Reduces project failure; improves decision-making; enhances stakeholder confidence; optimizes cost &amp; time</li>
+        <li><strong>Mitigation Strategies:</strong></li>
+        <li><strong>Avoidance:</strong> Modify plan to eliminate risk. Ex: Use proven tech</li>
+        <li><strong>Mitigation:</strong> Reduce probability/impact. Ex: Code reviews &amp; testing</li>
+        <li><strong>Transfer:</strong> Shift risk to third party. Ex: Outsource complex modules</li>
+        <li><strong>Acceptance:</strong> Accept low-impact unavoidable risk. Ex: Minor perf issues</li>
+      </ul>
+    </div>
+
+    <div class="block full">
+      <h3>Project Scheduling Techniques</h3>
+      <table class="ct">
+        <tr><th>Technique</th><th>Type</th><th>Key Features</th><th>Best For</th></tr>
+        <tr><td>Gantt Chart</td><td>Visual bar chart</td><td>Tasks vs time; shows start/duration/end; easy to understand. Limitation: doesn't show dependencies</td><td>Simple project tracking</td></tr>
+        <tr><td>PERT</td><td>Probabilistic</td><td>3 time estimates: Optimistic (O), Most likely (M), Pessimistic (P). Formula: ET = (O+4M+P)/6. Network diagram</td><td>R&D projects, uncertain timelines</td></tr>
+        <tr><td>CPM</td><td>Deterministic</td><td>Identifies critical path (longest path = minimum project duration); identifies slack time</td><td>Large projects with fixed task durations</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <h3>Version Control — Git &amp; GitHub</h3>
+      <ul class="pts">
+        <li><strong>Git:</strong> Distributed VCS — tracks changes locally; branching, merging, complete history</li>
+        <li><strong>GitHub:</strong> Cloud platform hosting Git repositories; enables pull requests, issues, code reviews, collaboration</li>
+        <li><strong>Git Features:</strong> Distributed VCS, branching &amp; merging, tracks changes, collaboration support (via GitHub)</li>
+        <li><strong>Git vs GitHub:</strong> Git = version control system (local); GitHub = cloud platform (remote collaboration)</li>
+        <li><strong>Why important:</strong> Parallel development, conflict resolution, code history, team consistency</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Git Workflow (Feature Branch Model)</h3>
+      <ul class="pts">
+        <li>1. Clone remote repository</li>
+        <li>2. Create feature branch from main</li>
+        <li>3. Make changes &amp; commit locally</li>
+        <li>4. Push changes to remote (GitHub)</li>
+        <li>5. Raise Pull Request for review</li>
+        <li>6. Code reviewed → merged to main</li>
+        <li>7. All team members pull updated code</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Software Configuration Management (SCM)</h3>
+      <ul class="pts">
+        <li><strong>Definition:</strong> Process of tracking &amp; controlling changes in software to ensure consistency, integrity &amp; traceability</li>
+        <li><strong>Configuration Identification:</strong> Identify &amp; uniquely name/version all Configuration Items (CIs)</li>
+        <li><strong>Configuration Control:</strong> Manage changes via Change Request → Impact Analysis → Approval (CCB) → Implementation</li>
+        <li><strong>Status Accounting:</strong> Record &amp; report current status/history of CIs (e.g., Git logs)</li>
+        <li><strong>Configuration Auditing:</strong> Verify software matches documented requirements; functional &amp; physical audits</li>
+        <li><strong>Role in Quality:</strong> Consistency, error reduction, traceability, supports QA audits, facilitates maintenance</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Scrum Framework</h3>
+      <ul class="pts">
+        <li><strong>3 Pillars:</strong> Transparency, Inspection, Adaptation</li>
+        <li><strong>Roles:</strong> Product Owner (manages backlog, prioritizes), Scrum Master (facilitates, removes obstacles), Development Team (design, develop, test)</li>
+        <li><strong>Artifacts:</strong> Product Backlog (requirements list), Sprint Backlog (tasks for sprint), Increment (working software)</li>
+        <li><strong>Sprint:</strong> 2–4 week cycle; each delivers a working increment</li>
+        <li><strong>Events:</strong> Sprint Planning → Daily Standup → Sprint Review → Retrospective → Backlog Refinement</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>CI/CD Pipeline</h3>
+      <ul class="pts">
+        <li><strong>CI (Continuous Integration):</strong> Auto-builds &amp; tests code after every commit; detects integration issues early</li>
+        <li><strong>CD (Continuous Delivery/Deployment):</strong> Auto-deploys validated builds to staging/production</li>
+        <li><strong>Pipeline stages:</strong> Source Code Repo → CI (Build + Unit Tests) → Automated Testing → Artifact Repo → CD (Deploy) → Monitoring &amp; Feedback</li>
+        <li><strong>Impact on delivery speed:</strong> Eliminates manual bottlenecks, early bug detection, parallel development, continuous releases, faster feedback</li>
+        <li><strong>Tools:</strong> Jenkins/GitHub Actions (CI), Docker (containerization), Prometheus/Grafana (monitoring)</li>
+      </ul>
+    </div>
+
+    <div class="block full">
+      <h3>Agile vs DevOps — Comparison &amp; Complementary Nature</h3>
+      <table class="ct">
+        <tr><th>Aspect</th><th>Agile</th><th>DevOps</th></tr>
+        <tr><td>Focus</td><td>Software development methodology</td><td>Dev + Operations integration</td></tr>
+        <tr><td>Goal</td><td>Faster feature delivery</td><td>Faster &amp; reliable deployment</td></tr>
+        <tr><td>Scope</td><td>Dev team</td><td>Dev + Ops teams</td></tr>
+        <tr><td>Release</td><td>Frequent (every sprint)</td><td>Continuous</td></tr>
+        <tr><td>Automation</td><td>Limited</td><td>Extensive (CI/CD, IaC)</td></tr>
+        <tr><td>Feedback</td><td>Customer-driven</td><td>System &amp; user-driven</td></tr>
+      </table>
+      <div class="note"><strong>Complementary:</strong> Agile builds the right product → DevOps delivers it efficiently. Together they: reduce time-to-market, enable continuous feedback loops, automate end-to-end, share a culture of collaboration.</div>
+    </div>
+
+    <div class="block">
+      <h3>DevOps Contribution to OOSE</h3>
+      <ul class="pts">
+        <li><strong>Supports Modularity:</strong> CI/CD pipelines allow independent build/deployment of OO modules</li>
+        <li><strong>Continuous Testing:</strong> Automated unit tests verify each class &amp; method, preserve encapsulation</li>
+        <li><strong>Version Control of OO Artifacts:</strong> Git manages class files, interfaces, UML diagrams, design documents</li>
+        <li><strong>Faster Feedback:</strong> Monitoring tools help refactor classes, optimize object interactions</li>
+        <li><strong>Enhanced Collaboration:</strong> Bridges designers (UML), developers (OOP), and operations (deployment)</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+</div><!-- /container -->
+</body>
+</html>
